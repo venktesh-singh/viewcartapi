@@ -8,6 +8,7 @@ const Admin = require("../modal/Admin");
 
 const registerAdmin = async (req, res) => {
   try {
+    
     const isAdded = await Admin.findOne({ email: req.body.email });
     if (isAdded) {
       return res.status(403).send({
@@ -22,6 +23,7 @@ const registerAdmin = async (req, res) => {
       });
       const staff = await newStaff.save();
       const token = signInToken(staff);
+      //console.log("Add New Register Data",staff,"Token", token);  
       res.send({
         token,
         _id: staff._id,   
@@ -36,7 +38,7 @@ const registerAdmin = async (req, res) => {
       message: err.message,
     });
   }
-};
+};  
 
 const loginAdmin = async (req, res) => {
   try {
@@ -44,26 +46,26 @@ const loginAdmin = async (req, res) => {
     if (admin && bcrypt.compareSync(req.body.password, admin.password)) {
       const token = signInToken(admin);
       res.send({
+        message: "Login successful!",
         token,
         _id: admin._id,
         name: admin.name,
-        phone: admin.phone,
-        email: admin.email,
-        image: admin.image,
+        email: admin.email,  
       });
     } else {
       res.status(401).send({
-        message: "Invalid Email or password!",
+        message: "Invalid Email or password!",      
       });
     }
-  } catch (err) {
+  } catch (err) {  
     res.status(500).send({
-      message: err.message,
-    });
+      message: err.message,  
+    });  
   }
 };
 
-const forgetPassword = async (req, res) => {
+const forgetPassword = async (req, res) => 
+{
   const isAdded = await Admin.findOne({ email: req.body.verifyEmail });
   if (!isAdded) {
     return res.status(404).send({

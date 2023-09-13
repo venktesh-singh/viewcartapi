@@ -13,8 +13,6 @@ app.use(express.urlencoded({
 
 const corsOptions ={
     origin:'http://localhost:3000', 
-    // credentials:true,            //access-control-allow-credentials:true
-    // optionSuccessStatus:200
 }
 app.use(cors(corsOptions));
  
@@ -29,7 +27,7 @@ const productRouter = require('./router/productRoutes');
 app.use('/api/product', productRouter);
  
 const adminRouter = require('./router/adminRoutes');
-app.use('/api/admin', adminRouter);
+app.use('/api/', adminRouter);
 
 const categoryRouter = require('./router/categoryRoutes');
 app.use('/api/category', categoryRouter); 
@@ -37,7 +35,7 @@ app.use('/api/category', categoryRouter);
 const orderRouter = require('./router/orderRoutes');
 app.use('/api/order', orderRouter);
 
-const couponRouter = require('./router/couponRoutes');
+const couponRouter = require('./router/couponRoutes'); 
 app.use('/api/coupon', couponRouter); 
 
 const customerRoute = require('./router/customerRoutes');
